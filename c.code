@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define MAX_WORDS 50
+#define MAX_CHARACTERS 20
+
+int read_line(char str[], int n);
+
+int main(){
+  char *words[MAX_WORDS], *temp;
+  char word[MAX_CHARACTERS+1];
+  int i,j, word_count=0;
+ 
+  for(;;){
+    if (word_count == MAX_WORDS) {
+        printf("Maximum words %d reached.", word_count);
+        break;
+      }
+        printf("Enter Word:");
+        if(read_line(word,MAX_CHARACTERS)==0)
+              break;
+        words[word_count]=malloc(strlen(word)+1);
+        strcpy(words[word_count],word);
+        word_count++;
+  }
+  for(i=0; i<word_count;i++){
+    for(j=i+1; j<word_count;j++){
+      if (strcmp(words[i],words[j])>0){
+      char *temp=words[i];
+      words[i]=words[j];
+      words[j]=temp;
+    }
+    }
+  }
+  for (i = 0; i < word_count; i++) {
+    printf("%s\n", words[i]);
+    free(words[i]);
+  }
+     
+return 0;
+}
+
+
+
+int read_line(char str[], int n)
+{
+  int ch, i = 0;
+ 
+  while ((ch = getchar()) != '\n')
+    if (i < n)
+      str[i++] = ch;
+    str[i] = '\0';
+    return i;
+}
